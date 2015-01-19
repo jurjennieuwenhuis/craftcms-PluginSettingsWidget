@@ -1,0 +1,11 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.checkboxGroup({
+    label: "Preferred Plugins",
+    id: "allowed_plugins",
+    name: "allowed_plugins",
+    instructions: "Select the plugins to show on the dashboard.",
+    values: settings.allowed_plugins,
+    options: pluginOptions,
+    errors: settings.getErrors('allowed_plugins')
+}) }}

@@ -1,0 +1,7 @@
+{% if plugins|length %}
+    <table class="body fullwidth">
+    {% for name, settingsUrl in plugins %}
+            <tr><td><a href="{{ settingsUrl }}">{{ name }}</a></td></tr>
+    {% endfor %}
+    </table>
+{% endif %}
