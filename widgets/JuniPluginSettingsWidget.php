@@ -52,7 +52,7 @@ class JuniPluginSettingsWidget extends BaseWidget
     }
 
     /**
-     * Retrieve list of all enabled plugins with a settings panel. Indexed by name and with url as value.
+     * Retrieve list of all enabled plugins with a settings panel.
      *
      * @return array
      */
@@ -77,7 +77,7 @@ class JuniPluginSettingsWidget extends BaseWidget
                     $url = UrlHelper::getCpUrl('/settings/plugins/' . $plugin->getClassHandle());
                 }
 
-                $ret[$plugin->getName()] = $url;
+                $ret[] = array('label' => $plugin->getName(), 'value' => $plugin->getName(), 'url' => $url);
             }
         }
 
@@ -92,19 +92,22 @@ class JuniPluginSettingsWidget extends BaseWidget
      */
     private function getAllowedPlugins(Model $settings)
     {
+        $ret = array();
+
         $plugins = $this->getPlugins();
+
 
         if (null != $settings['allowed_plugins'])
         {
-            foreach ($plugins as $name => $url)
+            foreach ($plugins as $plugin)
             {
-                if (!in_array($name, $settings['allowed_plugins']))
+                if ($settings['allowed_plugins'] === '*' || in_array($plugin['value'], $settings['allowed_plugins']))
                 {
-                    unset($plugins[$name]);
+                    $ret[$plugin['value']] = $plugin['url'];
                 }
             }
         }
 
-        return $plugins;
+        return $ret;
     }
 }
